@@ -8,7 +8,13 @@
     <br>
     <span><strong>Цена</strong>: {{ product.price }}</span>
     <br>
-    <span><strong>Описание</strong>: {{ product.descr }}</span>
+    <span><strong>Категория</strong>: {{ product.category }}</span>
+    <br>
+    <span><strong>Цвет</strong>:
+      <label class="color-label" :class="product.color">
+        <input type="radio" name="color" class="color-label-input">
+      </label>
+    </span>
   </li>
 </template>
 
@@ -42,5 +48,30 @@ export default {
   width: 250px;
   display: flex;
   justify-content: center;
+}
+
+.color-label {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 50%;
+  font-weight: 0;
+  cursor: pointer;
+}
+
+.color-label-input {
+  display: none;
+}
+
+.color-label.red {
+  background: red;
+}
+
+.color-label.green {
+  background: green;
+}
+
+.color-label.black {
+  background: black;
 }
 </style>

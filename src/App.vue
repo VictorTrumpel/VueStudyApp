@@ -1,8 +1,15 @@
 <template>
   <main class="container row">
+    <ProductFilter
+        :price-from.sync="filterPriceFrom"
+        :price-to.sync="filterPriceTo"
+        :category.sync="filterCategory"
+        :color.sync="filterColor"
+        :page.sync="page"
+    />
     <section>
       <ProductList :products="products"/>
-      <BasePagination v-model="pages" :items="countProducts" :per-page="productsPerPage"/>
+      <BasePagination v-model="page" :items="countProducts" :per-page="productsPerPage"/>
     </section>
   </main>
 </template>
@@ -11,23 +18,49 @@
 import products from './data/products'
 import ProductList from './components/ProductList'
 import BasePagination from './components/BasePagination'
+import ProductFilter from './components/ProductFilter'
 
 export default {
   name: 'App',
-  components: {ProductList, BasePagination},
+  components: {ProductList, BasePagination, ProductFilter},
   data () {
     return {
-      pages: 1,
+      filterPriceFrom: 0,
+      filterPriceTo: 0,
+      filterCategory: 'Все категории',
+      filterColor: 'Все цвета',
+      page: 1,
       productsPerPage: 2
     }
   },
   computed: {
+    filteredProducts () {
+      let filterProducts = products
+
+      if (this.filterPriceFrom > 0) {
+        filterProducts = filterProducts.filter(product => product.price > this.filterPriceFrom)
+      }
+
+      if (this.filterPriceTo > 0) {
+        filterProducts = filterProducts.filter(product => product.price < this.filterPriceTo)
+      }
+
+      if (this.filterCategory !== 'Все категории') {
+        filterProducts = filterProducts.filter(product => product.category === this.filterCategory)
+      }
+
+      if (this.filterColor !== 'Все цвета') {
+        filterProducts = filterProducts.filter(product => product.color === this.filterColor)
+      }
+
+      return filterProducts
+    },
     products () {
-      const offset = (this.pages - 1) * this.productsPerPage
-      return products.slice(offset, offset + this.productsPerPage)
+      const offset = (this.page - 1) * this.productsPerPage
+      return this.filteredProducts.slice(offset, offset + this.productsPerPage)
     },
     countProducts () {
-      return products.length
+      return this.filteredProducts.length
     }
   }
 }
@@ -46,6 +79,7 @@ export default {
 }
 .row {
   display: flex;
+  justify-content: space-evenly;
   flex-direction: row;
   align-items: stretch;
 }

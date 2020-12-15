@@ -3,12 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import FirstConst from './data/FirstConst'
-import SecondConst from './data/SecondConst'
-import printMessage from './data/PrintMessage'
-
-printMessage(FirstConst)
-printMessage(SecondConst)
 
 Vue.config.productionTip = false
 
