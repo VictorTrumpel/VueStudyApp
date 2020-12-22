@@ -10,11 +10,10 @@
     <br>
     <span><strong>Категория</strong>: {{ product.category }}</span>
     <br>
-    <span><strong>Цвет</strong>:
-      <label class="color-label" :class="product.color">
-        <input type="radio" name="color" class="color-label-input">
-      </label>
-    </span>
+    <div>
+      <span>Цвет:</span>
+      <div v-for="color in product.color" :key="color" :class="color" class="color-label"></div>
+    </div>
   </li>
 </template>
 

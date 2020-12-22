@@ -21,19 +21,7 @@
         </option>
       </select>
     </label>
-    <label>
-      Все цвета
-      <input type="radio" value="Все цвета" name="color" v-model="currentColor">
-    </label>
-    <div class="chek-color-block">
-      <label
-          v-for="color in colors"
-          :key="color.id"
-          :class="['color-label', color.name, {'checked-color': currentColor === color.name}]"
-      >
-        <input type="radio" :value="color.name" name="color" v-model="currentColor" class="color-label-input">
-      </label>
-    </div>
+    <BaseSelectColor :colors="colors" :current-color.sync="currentColor"/>
     <button class="filter-button" type="submit" @click.prevent="submitProductFilter">Применить</button>
     <button class="filter-button" type="submit" @click.prevent="resetProductFilter">Сбросить</button>
   </form>
@@ -42,10 +30,12 @@
 <script>
 import categories from '../data/categories'
 import colors from '../data/colors'
+import BaseSelectColor from './BaseSelectColor'
 
 export default {
   name: 'ProductFilter',
   props: ['priceFrom', 'priceTo', 'category', 'color', 'page'],
+  components: {BaseSelectColor},
   data () {
     return {
       currentPriceFrom: 0,
@@ -71,9 +61,6 @@ export default {
     },
     category (value) {
       this.currentCategory = value
-    },
-    color (value) {
-      this.currentColor = value
     }
   },
   methods: {
