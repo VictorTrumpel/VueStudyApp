@@ -41,12 +41,12 @@ export default {
   padding-top: 15px;
   padding-bottom: 15px;
   display: flex;
-  justify-content: space-between;
 }
 
 .color-label {
   width: 20px;
   height: 20px;
+  margin-right: 15px;
   display: block;
   border-radius: 50%;
   font-weight: 0;

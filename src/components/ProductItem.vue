@@ -10,17 +10,30 @@
     <br>
     <span><strong>Категория</strong>: {{ product.category }}</span>
     <br>
-    <div>
-      <span>Цвет:</span>
-      <div v-for="color in product.color" :key="color" :class="color" class="color-label"></div>
-    </div>
+    <BaseSelectColor :colors="colors" :current-color.sync="currentColor"/>
   </li>
 </template>
 
 <script>
+import BaseSelectColor from './BaseSelectColor'
+import colors from '../data/colors'
+
 export default {
   name: 'ProductItem',
-  props: ['product']
+  components: {BaseSelectColor},
+  props: ['product'],
+  data () {
+    return {
+      currentColor: ''
+    }
+  },
+  computed: {
+    colors () {
+      let colorsItem = colors
+      colorsItem = colorsItem.filter(color => this.product.colorsId.includes(color.id))
+      return colorsItem
+    }
+  }
 }
 </script>
 

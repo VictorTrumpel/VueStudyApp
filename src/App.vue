@@ -17,6 +17,7 @@
 
 <script>
 import products from './data/products'
+import colors from './data/colors'
 import ProductList from './components/ProductList'
 import BasePagination from './components/BasePagination'
 import ProductFilter from './components/ProductFilter'
@@ -51,7 +52,14 @@ export default {
       }
 
       if (this.filterColor !== 'Все цвета') {
-        filterProducts = filterProducts.filter(product => product.color.includes(this.filterColor))
+        let idOfFilterColor = 0
+        colors.forEach(color => {
+          if (color.name === this.filterColor) {
+            idOfFilterColor = color.id
+          }
+        })
+
+        filterProducts = filterProducts.filter(product => product.colorsId.includes(idOfFilterColor))
       }
 
       return filterProducts
