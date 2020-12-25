@@ -1,5 +1,5 @@
 <template>
-  <li class="product-item">
+  <li class="product-item" @click="gotoPage('product', product)">
     <div class="product-img-container">
       <img class="product-item-image" :src="product.img" :alt="product.title">
     </div>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import eventBus from '../eventBus'
 import BaseSelectColor from './BaseSelectColor'
 import colors from '../data/colors'
 
@@ -33,12 +34,18 @@ export default {
       colorsItem = colorsItem.filter(color => this.product.colorsId.includes(color.id))
       return colorsItem
     }
+  },
+  methods: {
+    gotoPage (pageName, pageParams) {
+      eventBus.$emit('gotoPage', pageName, pageParams)
+    }
   }
 }
 </script>
 
 <style scoped>
 .product-item {
+  list-style: none;
   margin-bottom: 20px;
   min-width: 250px;
   padding: 10px;

@@ -40,7 +40,7 @@ export default {
     return {
       currentPriceFrom: 0,
       currentPriceTo: 0,
-      currentColor: '',
+      currentColor: 'Все цвета',
       currentCategory: 'Все категории'
     }
   },
