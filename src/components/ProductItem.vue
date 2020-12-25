@@ -6,7 +6,7 @@
     <br>
     <span><strong>Название</strong>: {{ product.title }}</span>
     <br>
-    <span><strong>Цена</strong>: {{ product.price }}</span>
+    <span><strong>Цена</strong>: {{ numberFormat(product.price) }}</span>
     <br>
     <span><strong>Категория</strong>: {{ product.category }}</span>
     <br>
@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import eventBus from '../eventBus'
+import numberFormat from '../helpers/numberFormat'
+import gotoPage from '../helpers/gotoPage'
 import BaseSelectColor from './BaseSelectColor'
 import colors from '../data/colors'
 
@@ -36,9 +37,8 @@ export default {
     }
   },
   methods: {
-    gotoPage (pageName, pageParams) {
-      eventBus.$emit('gotoPage', pageName, pageParams)
-    }
+    gotoPage,
+    numberFormat
   }
 }
 </script>

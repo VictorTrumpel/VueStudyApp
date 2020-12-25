@@ -7,14 +7,12 @@
 
 <script>
 import ProductItem from '../components/ProductItem'
-import eventBus from '../eventBus'
+import gotoPage from '../helpers/gotoPage'
 export default {
   props: ['page-params'],
   components: {ProductItem},
   methods: {
-    gotoPage (pageName, pageParams) {
-      eventBus.$emit('gotoPage', pageName, pageParams)
-    }
+    gotoPage
   }
 }
 </script>
