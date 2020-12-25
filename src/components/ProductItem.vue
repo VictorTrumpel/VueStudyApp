@@ -1,5 +1,5 @@
 <template>
-  <li class="product-item">
+  <li class="product-item" @click="$emit('gotoPage', 'product', product)">
     <div class="product-img-container">
       <img class="product-item-image" :src="product.img" :alt="product.title">
     </div>
@@ -39,6 +39,7 @@ export default {
 
 <style scoped>
 .product-item {
+  list-style: none;
   margin-bottom: 20px;
   min-width: 250px;
   padding: 10px;

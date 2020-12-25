@@ -40,7 +40,7 @@ export default {
     return {
       currentPriceFrom: 0,
       currentPriceTo: 0,
-      currentColor: '',
+      currentColor: 'Все цвета',
       currentCategory: 'Все категории'
     }
   },
@@ -75,7 +75,7 @@ export default {
       this.$emit('update:priceFrom', 0)
       this.$emit('update:priceTo', 0)
       this.$emit('update:category', 'Все категории')
-      this.$emit('update:color', '')
+      this.$emit('update:color', 'Все цвета')
       this.$emit('update:page', 1)
     }
   }
