@@ -6,7 +6,7 @@
     <br>
     <span><strong>Название</strong>: {{ product.title }}</span>
     <br>
-    <span><strong>Цена</strong>: {{ product.price }}</span>
+    <span><strong>Цена</strong>: {{ numberFormat(product.price) }}</span>
     <br>
     <span><strong>Категория</strong>: {{ product.category }}</span>
     <br>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import numberFormat from '../helpers/numberFormat'
 import BaseSelectColor from './BaseSelectColor'
 import colors from '../data/colors'
 
@@ -33,6 +34,9 @@ export default {
       colorsItem = colorsItem.filter(color => this.product.colorsId.includes(color.id))
       return colorsItem
     }
+  },
+  methods: {
+    numberFormat
   }
 }
 </script>
