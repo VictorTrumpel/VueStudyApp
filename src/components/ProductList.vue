@@ -1,11 +1,9 @@
 <template>
-  <ul class="product-list">
-    <ProductItem
-        v-for="product in products"
-        :product="product"
-        :key="product.id"
-    />
-  </ul>
+  <b-row class="d-flex align-items-md-stretch">
+    <b-col lg="6" v-for="product in products" :key="product.id">
+      <ProductItem :product="product"/>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -17,11 +15,4 @@ export default {
 </script>
 
 <style>
-.product-list {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
 </style>

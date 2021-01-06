@@ -1,30 +1,41 @@
 <template>
-  <form class="product-filter">
+  <b-form>
     <h3>Фильт товаров</h3>
-    <label>
-      цена от:
-      <br>
-      <input class="filter-input" type="text" v-model.number="currentPriceFrom" required>
-    </label>
-    <label>
-      цена до:
-      <br>
-      <input class="filter-input" type="text" v-model.number="currentPriceTo" required>
-    </label>
-    <label>
-      категория товара:
-      <br>
-      <select class="filter-input" name="category" v-model="currentCategory">
-        <option value="Все категории">Все категории</option>
-        <option :value="category.title" v-for="category in categories" :key="category.id">
-          {{ category.title }}
-        </option>
-      </select>
-    </label>
-    <BaseSelectColor :colors="colors" :current-color.sync="currentColor"/>
-    <button class="filter-button" type="submit" @click.prevent="submitProductFilter">Применить</button>
-    <button class="filter-button" type="submit" @click.prevent="resetProductFilter">Сбросить</button>
-  </form>
+    <b-row>
+      <b-col lg="12" class="mb-4">
+        <b-form-input
+            id="currentPriceFrom"
+            placeholder="цена от"
+            type="number"
+            v-model.number="currentPriceFrom"
+        ></b-form-input>
+      </b-col>
+      <b-col lg="12" class="mb-4">
+        <b-form-input
+            id="currentPriceFrom"
+            placeholder="цена до"
+            type="number"
+            v-model.number="currentPriceTo"
+        ></b-form-input>
+      </b-col>
+      <b-col lg="12" class="mb-4">
+        <b-form-select class="filter-input" name="category" v-model="currentCategory">
+          <b-form-select-option value="Все категории">Все категории</b-form-select-option>
+          <b-form-select-option :value="category.title" v-for="category in categories" :key="category.id">
+            {{ category.title }}
+          </b-form-select-option>
+        </b-form-select>
+      </b-col>
+    </b-row>
+    <BaseSelectColor :colors="colors" :current-color.sync="currentColor" class="mb-4"/>
+    <b-button
+        variant="success"
+        class="filter-button"
+        type="submit"
+        @click.prevent="submitProductFilter"
+    >Применить</b-button>
+    <b-button class="filter-button" type="submit" @click.prevent="resetProductFilter">Сбросить</b-button>
+  </b-form>
 </template>
 
 <script>
@@ -38,9 +49,9 @@ export default {
   components: {BaseSelectColor},
   data () {
     return {
-      currentPriceFrom: 0,
-      currentPriceTo: 0,
-      currentColor: '',
+      currentPriceFrom: '',
+      currentPriceTo: '',
+      currentColor: 'Все цвета',
       currentCategory: 'Все категории'
     }
   },
@@ -75,7 +86,7 @@ export default {
       this.$emit('update:priceFrom', 0)
       this.$emit('update:priceTo', 0)
       this.$emit('update:category', 'Все категории')
-      this.$emit('update:color', '')
+      this.$emit('update:color', 'Все цвета')
       this.$emit('update:page', 1)
     }
   }
@@ -83,74 +94,10 @@ export default {
 </script>
 
 <style scoped>
-.product-filter {
-  width: 200px;
-  padding: 15px;
-  border: 5px dashed black;
-  display: flex;
-  flex-direction: column;
-}
-
-.filter-input {
-  margin-bottom: 20px;
-  width: 120px;
-  height: 30px;
-  padding-left: 10px;
-}
-
-.filter-button {
-  margin-bottom: 20px;
-  width: 100px;
-  height: 30px;
-}
-
-.chek-color-block {
-  width: 100px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.color-label {
-  width: 20px;
-  height: 20px;
-  display: block;
-  border-radius: 50%;
-  font-weight: 0;
-  cursor: pointer;
-}
-
-.color-label.checked-color {
-  border: 1px dotted black;
-}
-
-.color-label.checked-color::before {
-  transform: scale(0.6);
-}
-
-.color-label::before {
-  content: '';
-  position: absolute;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  transition: 0.3s ease-in-out transform;
-}
-
-.color-label.red::before {
-  background: red;
-}
-
-.color-label.green::before {
-  background: green;
-}
-
-.color-label.black::before {
-  background: black;
-}
-
-.color-label-input {
-  display: none;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 </style>

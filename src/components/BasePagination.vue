@@ -1,40 +1,45 @@
 <template>
-<div class="pagination">
-  <button
-      class="pagination-left-btn pagination-item"
-      :disabled="page === 1"
-      @click="paginate(page-1)"
-  >&#11164;</button>
-  <button
-      :class="['pagination-item', {'active-pag-item': page === pageNumber}]"
-      v-for="pageNumber in pages"
-      :key="pageNumber"
-      @click="paginate(pageNumber)"
-  >{{ pageNumber }}</button>
-  <button
-      class="pagination-right-btn pagination-item"
-      :disabled="page === pages"
-      @click="paginate(page + 1)"
-  >&#11166;</button>
-</div>
+<!--<div class="pagination">-->
+<!--  <button-->
+<!--      class="pagination-left-btn pagination-item"-->
+<!--      :disabled="page === 1"-->
+<!--      @click="paginate(page-1)"-->
+<!--  >&#11164;</button>-->
+<!--  <button-->
+<!--      :class="['pagination-item', {'active-pag-item': page === pageNumber}]"-->
+<!--      v-for="pageNumber in pages"-->
+<!--      :key="pageNumber"-->
+<!--      @click="paginate(pageNumber)"-->
+<!--  >{{ pageNumber }}</button>-->
+<!--  <button-->
+<!--      class="pagination-right-btn pagination-item"-->
+<!--      :disabled="page === pages"-->
+<!--      @click="paginate(page + 1)"-->
+<!--  >&#11166;</button>-->
+<!--</div>-->
+  <div class="overflow-auto">
+    <b-pagination
+        v-model="currentPage"
+        @input="paginate"
+        :total-rows="items"
+        :per-page="perPage"
+        aria-controls="my-table"
+    ></b-pagination>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'BasePagination',
   props: ['page', 'items', 'perPage'],
-  model: {
-    prop: 'page',
-    event: 'paginate'
-  },
-  methods: {
-    paginate (page) {
-      this.$emit('paginate', page)
+  data () {
+    return {
+      currentPage: this.page
     }
   },
-  computed: {
-    pages () {
-      return Math.ceil(this.items / this.perPage)
+  methods: {
+    paginate () {
+      this.$emit('update:page', this.currentPage)
     }
   }
 }

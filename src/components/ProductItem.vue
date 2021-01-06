@@ -1,21 +1,28 @@
 <template>
-  <li class="product-item">
-    <div class="product-img-container">
-      <img class="product-item-image" :src="product.img" :alt="product.title">
-    </div>
-    <br>
-    <span><strong>Название</strong>: {{ product.title }}</span>
-    <br>
-    <span><strong>Цена</strong>: {{ product.price }}</span>
-    <br>
-    <span><strong>Категория</strong>: {{ product.category }}</span>
-    <br>
-    <BaseSelectColor :colors="colors" :current-color.sync="currentColor"/>
-  </li>
+  <b-card
+      :title="product.title"
+      :img-src="product.img"
+      :img-alt="product.title"
+      img-top
+      tag="article"
+      style="max-width: 20rem;"
+      class="mb-2"
+  >
+    <b-card-text>
+      <span><strong>Цена</strong>: {{ numberFormat(product.price) }}</span>
+      <br>
+      <span><strong>Категория</strong>: {{ product.category }}</span>
+      <br>
+      <BaseSelectColor :colors="colors" :current-color.sync="currentColor"/>
+    </b-card-text>
+    <b-button class="mb-1" variant="primary" @click="gotoProductPage(product.id)">Перейти к товару</b-button>
+    <b-button variant="success" @click="addProductToCart">В корзину</b-button>
+  </b-card>
 </template>
 
 <script>
 import BaseSelectColor from './BaseSelectColor'
+import numberFormat from '../helpers/numberFormat'
 import colors from '../data/colors'
 
 export default {
@@ -33,57 +40,20 @@ export default {
       colorsItem = colorsItem.filter(color => this.product.colorsId.includes(color.id))
       return colorsItem
     }
+  },
+  methods: {
+    numberFormat,
+    gotoProductPage (id) {
+      if (this.$route.path !== '/product/' + id) {
+        this.$router.push('/product/' + id)
+      }
+    },
+    addProductToCart () {
+      this.$store.commit('addProductToCart', {productId: this.product.id, amount: 1})
+    }
   }
 }
 </script>
 
 <style scoped>
-.product-item {
-  margin-bottom: 20px;
-  min-width: 250px;
-  padding: 10px;
-  border: 1px solid gray;
-  transition: 0.3s ease-in-out background-color;
-  cursor: pointer;
-}
-
-.product-item-image {
-  width: 250px;
-}
-
-.product-item:hover {
-  background: lightgray;
-}
-
-.product-img-container {
-  height: 250px;
-  width: 250px;
-  display: flex;
-  justify-content: center;
-}
-
-.color-label {
-  width: 12px;
-  height: 12px;
-  display: inline-block;
-  border-radius: 50%;
-  font-weight: 0;
-  cursor: pointer;
-}
-
-.color-label-input {
-  display: none;
-}
-
-.color-label.red {
-  background: red;
-}
-
-.color-label.green {
-  background: green;
-}
-
-.color-label.black {
-  background: black;
-}
 </style>
